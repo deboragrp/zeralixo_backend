@@ -1,8 +1,8 @@
 const Morador = require("../models/morador.model");
 
 module.exports = {
-  index(req, res) {
-    const user = Morador.find();
+  async index(req, res) {
+    const user = await Morador.find();
     res.json(user);
   },
   async create(req, res) {
@@ -53,9 +53,9 @@ module.exports = {
       return res.status(500).json(user);
     }
   },
-  details(req, res) {
+  async details(req, res) {
     const { _id } = req.params;
-    const user = Morador.find({ _id: id });
+    const user = await Morador.findOne({ _id });
     res.json(user);
   },
 
