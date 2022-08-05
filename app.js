@@ -1,4 +1,6 @@
 const express = require("express");
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const path = require("path");
@@ -34,7 +36,7 @@ mongoose
 
 app.listen(8080, () => {
   try {
-    console.log("conectada");
+    console.log("Porta Conectada!");
   } catch (erro) {
     console.log("erro: ", erro);
   }
