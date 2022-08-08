@@ -2,12 +2,12 @@ const express = require("express");
 const Morador = require("./controllers/moradores.controllers");
 const Condominio = require("./controllers/condominios.controllers");
 const Prodhorta = require("./controllers/prodshorta.controllers");
+const Task = require("./controllers/tasks.controllers");
 const jwt = require("jsonwebtoken");
 const routes = express.Router();
 
 function checkToken(req, res, next) {
   const authHeader = req.headers.authorization;
-
   const token = authHeader.split(" ")[1];
 
   if (!token) {
@@ -16,8 +16,14 @@ function checkToken(req, res, next) {
 
   try {
     const secret = process.env.SECRET;
-    jwt.verify(token, secret);
-    next();
+    jwt.verify(token, secret, (error, decode) => {
+      if (error) {
+        return res.status(400).json({ msg: "Token Inválido" });
+      } else {
+        req.id = decode.id;
+        next();
+      }
+    });
   } catch (err) {
     res.status(400).json({ msg: "Token inválido!" });
   }
@@ -25,10 +31,10 @@ function checkToken(req, res, next) {
 
 //routes do morador
 routes.get("/api/moradores", Morador.index);
-routes.get("/api/moradores.details/:_id", Morador.details);
+routes.get("/api/moradores.details/:_id", checkToken, Morador.details);
 routes.post("/api/moradores", Morador.create);
-routes.delete("/api/moradores/:_id", Morador.delete);
-routes.put("/api/moradores", Morador.update);
+routes.delete("/api/moradores/:_id", checkToken, Morador.delete);
+routes.put("/api/moradores", checkToken, Morador.update);
 routes.post("/api/auth/login", Morador.login);
 routes.get("/api/perfil/:_id", checkToken, Morador.perfil);
 
@@ -45,5 +51,11 @@ routes.get("/api/prodshorta.details/:_id", Prodhorta.details);
 routes.post("/api/prodshorta", Prodhorta.create);
 routes.delete("/api/prodshorta/:_id", Prodhorta.delete);
 routes.put("/api/prodshorta", Prodhorta.update);
+
+//routes tasks
+routes.get("/api/tasks", Task.index);
+routes.post("/api/tasks/create", checkToken, Task.create);
+routes.get("/api/tasks", checkToken, Task.taskByID);
+routes.delete("/api/tasks/delete/:_id", checkToken, Task.deleteTask);
 
 module.exports = routes;
