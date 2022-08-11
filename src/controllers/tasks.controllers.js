@@ -2,8 +2,12 @@ const Task = require("../models/task.model");
 
 module.exports = {
   async index(req, res) {
-    const list = await Task.find();
-    res.json(list);
+    try {
+      const list = await Task.find();
+      res.json(list);
+    } catch {
+      return res.status(400).json("Erro ao encontrar as tasks!");
+    }
   },
   async create(req, res) {
     try {
@@ -16,17 +20,25 @@ module.exports = {
       });
       res.json({ createTask });
     } catch {
-      return res.status(400).json("Error");
+      return res.status(400).json("Erro ao criar uma task!");
     }
   },
   async taskByID(req, res) {
-    let id_user = req.id;
-    const list = await Task.findOne({ id_user });
-    res.json(list);
+    try {
+      let id_user = req.id;
+      const list = await Task.findOne({ id_user });
+      res.json(list);
+    } catch {
+      return res.status(400).json("Erro ao encontrar suas tasks!");
+    }
   },
   async deleteTask(req, res) {
-    const { _id } = req.params;
-    const task = await Task.findByIdAndDelete({ _id });
-    return res.json(task);
+    try {
+      const { _id } = req.params;
+      const task = await Task.findByIdAndDelete({ _id });
+      return res.json(task);
+    } catch {
+      return res.status(400).json("Erro ao deletar task!");
+    }
   },
 };
