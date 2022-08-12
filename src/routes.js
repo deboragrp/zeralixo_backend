@@ -3,6 +3,7 @@ const Morador = require("./controllers/moradores.controllers");
 const Condominio = require("./controllers/condominios.controllers");
 const Prodhorta = require("./controllers/prodshorta.controllers");
 const Task = require("./controllers/tasks.controllers");
+const ListMoradores = require("./controllers/listmoradores.controllers");
 const jwt = require("jsonwebtoken");
 const routes = express.Router();
 
@@ -44,6 +45,7 @@ routes.get("/api/condominios.details/:_id", Condominio.details);
 routes.post("/api/condominios", Condominio.create);
 routes.delete("/api/condominios/:_id", Condominio.delete);
 routes.put("/api/condominios", Condominio.update);
+routes.post("/api/auth/logincond", Condominio.login);
 
 //routes dos produtos da horta
 routes.get("/api/prodshorta", Prodhorta.index);
@@ -57,5 +59,13 @@ routes.get("/api/tasks", Task.index);
 routes.post("/api/tasks/create", checkToken, Task.create);
 routes.get("/api/tasks", checkToken, Task.taskByID);
 routes.delete("/api/tasks/delete/:_id", checkToken, Task.deleteTask);
+
+//routes lista de moradores
+routes.post("/api/listademoradores", ListMoradores.create);
+routes.get(
+  "/api/listademoradores/:_id_cond",
+  checkToken,
+  ListMoradores.mostrarConexoesCond
+);
 
 module.exports = routes;

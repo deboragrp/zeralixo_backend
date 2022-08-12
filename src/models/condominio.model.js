@@ -1,24 +1,28 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const DataSchema = new mongoose.Schema(
   {
     nome: String,
     email: String,
+    senha: String,
     cep: String,
     endereco: String,
     n_endereco: String,
     bairro: String,
     cidade: String,
     estado: String,
+    seg: String,
   },
   {
     timestamps: true,
   }
 );
 DataSchema.pre("save", function (next) {
-  if (!this.isModified("email")) {
+  if (!this.isModified("senha")) {
     return next();
   }
+  this.senha = bcrypt.hashSync(this.senha, 10);
   next();
 });
 

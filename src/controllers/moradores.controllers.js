@@ -24,6 +24,7 @@ module.exports = {
       cidade,
       estado,
       funcao,
+      seg,
     } = req.body;
 
     let data = {};
@@ -47,6 +48,7 @@ module.exports = {
         cidade,
         estado,
         funcao,
+        seg,
       };
 
       user = await Morador.create(data);

@@ -18,6 +18,7 @@ const DataSchema = new mongoose.Schema(
     cidade: String,
     estado: String,
     funcao: String,
+    seg: String,
   },
   {
     timestamps: true,
