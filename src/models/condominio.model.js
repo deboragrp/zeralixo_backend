@@ -12,7 +12,6 @@ const DataSchema = new mongoose.Schema(
     bairro: String,
     cidade: String,
     estado: String,
-    seg: String,
   },
   {
     timestamps: true,

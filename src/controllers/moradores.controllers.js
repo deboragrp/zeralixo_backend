@@ -24,7 +24,6 @@ module.exports = {
       cidade,
       estado,
       funcao,
-      seg,
     } = req.body;
 
     let data = {};
@@ -48,7 +47,6 @@ module.exports = {
         cidade,
         estado,
         funcao,
-        seg,
       };
 
       user = await Morador.create(data);
@@ -151,4 +149,13 @@ module.exports = {
 
     res.status(200).json({ user });
   },
+  // async destroyToken(req, res) {
+  //   const token = req.headers.token;
+  //   if (token) {
+  //     res.cookie("token", null, { httpOnly: true });
+  //   } else {
+  //     res.status(401).send("Logout não autorizado");
+  //   }
+  //   res.send("Sessão finalizada com sucesso!");
+  // },
 };

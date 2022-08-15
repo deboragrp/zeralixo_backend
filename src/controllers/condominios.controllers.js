@@ -19,7 +19,6 @@ module.exports = {
       bairro,
       cidade,
       estado,
-      seg,
     } = req.body;
 
     let data = {};
@@ -37,7 +36,6 @@ module.exports = {
         bairro,
         cidade,
         estado,
-        seg,
       };
 
       user = await Condominio.create(data);
