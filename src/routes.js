@@ -56,9 +56,9 @@ routes.put("/api/prodshorta", Prodhorta.update);
 
 //routes tasks
 routes.get("/api/tasks", Task.index);
-routes.post("/api/tasks/create", checkToken, Task.create);
-routes.get("/api/tasks", checkToken, Task.taskByID);
-routes.delete("/api/tasks/delete/:_id", checkToken, Task.deleteTask);
+routes.post("/api/tasks/create", Task.create);
+routes.get("/api/tasks", Task.taskByID);
+routes.delete("/api/tasks/delete/:_id", Task.deleteTask);
 
 //routes lista de moradores
 routes.post("/api/listademoradores", ListMoradores.create);
